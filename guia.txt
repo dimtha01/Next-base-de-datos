@@ -1,0 +1,67 @@
+Estructura de carpetas: En Next.js 13, 
+las API routes se definen dentro de la carpeta app/api. 
+Cada API tiene su propia carpeta dentro de api, donde se define el archivo de ruta.
+
+Definición de rutas: 
+Cada archivo dentro de la carpeta api representa una ruta de API. 
+Por ejemplo, el archivo app/api/productos/route.js define la ruta /api/productos.
+
+Funciones de ruta: 
+Dentro de cada archivo de ruta, se exporta una o más funciones que manejan las solicitudes HTTP. Estas funciones se denominan GET, POST, PUT, PATCH y DELETE, según el método HTTP correspondiente.
+
+Lógica de la API: 
+Dentro de estas funciones de ruta, se implementa la lógica de la API, como consultar a una base de datos, procesar datos de entrada, y devolver una respuesta.
+
+Uso de NextResponse: 
+Para devolver la respuesta de la API, se utiliza el objeto NextResponse proporcionado por Next.js. 
+Esto permite un manejo más sencillo de los encabezados, el estado y el cuerpo de la respuesta.
+
+Acceso a datos y servicios: 
+Dentro de las funciones de ruta, se puede acceder a datos y servicios externos, como bases de datos, APIs externas, etc. 
+Esto se suele hacer importando módulos personalizados desde la carpeta app/libs.
+
+
+
+
+1) npx create-next-app@latest .
+2) npm i mysql2
+El paquete mysql2 en Node.js es una librería que permite interactuar con bases de datos MySQL de una manera sencilla y eficiente.
+
+
+Pasos:
+Instala el paquete mysql2:
+
+-- npm install mysql2
+
+Crea un archivo de configuración de la conexión a la base de datos:
+En la carpeta app/libs, crea un archivo llamado mysql.js con el siguiente contenido:
+javascript
+import mysql from 'mysql2/promise';
+
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'tu_usuario',
+  password: 'tu_contraseña',
+  database: 'apiproductos',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+export default pool;
+
+
+
+
+Asegúrate de reemplazar 'tu_usuario' y 'tu_contraseña' con tus credenciales de acceso a la base de datos.
+Crea las rutas de API para productos y categorías:
+
+En la carpeta app/api, crea dos carpetas: productos y categorias.
+Dentro de cada carpeta, crea un archivo route.js con el siguiente contenido:
+
+
+
+La diferencia entre PUT y PATCH es la siguiente:
+PUT: Reemplaza completamente el recurso existente con los datos proporcionados en la solicitud. Si algún campo no se envía, se perderá.
+PATCH: Actualiza solo los campos proporcionados en la solicitud, dejando intactos los demás campos.
+
+http://localhost:3000/api/productos/buscar?q=Whisk

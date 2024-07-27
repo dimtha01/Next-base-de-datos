@@ -1,0 +1,97 @@
+Guía del Código: Manejador de Solicitud GET con Next.js y MySQL
+
+Descripción General
+
+Este código es una función de manejo de solicitudes GET para una ruta API en Next.js. La función realiza una consulta a una base de datos MySQL para obtener datos y devolverlos en formato JSON. Si ocurre algún error, la función maneja el error y devuelve una respuesta adecuada.
+
+Código
+
+import { NextResponse } from "next/server";
+import pool from "@/app/libs/mysql";
+
+export async function GET() {
+    try {
+        const db = await pool.getConnection();
+        const query = 'select * from categorias';
+        const [rows] = await db.execute(query);
+        db.release();
+        
+        return NextResponse.json({ results: rows });
+    } catch (error) {
+        return NextResponse.json({
+            error: error
+        }, { status: 500 });
+    }
+}
+
+Explicación del Código
+
+1. Importaciones
+
+import { NextResponse } from "next/server";
+import pool from "@/app/libs/mysql";
+
+- `NextResponse`: Importa el objeto `NextResponse` desde `next/server`, que se utiliza para crear respuestas HTTP en Next.js.
+- `pool`: Importa el objeto `pool` desde un archivo de configuración de MySQL. Este objeto maneja las conexiones a la base de datos.
+
+2. Función Asincrónica `GET`
+
+export async function GET() {
+    try {
+        const db = await pool.getConnection();
+        const query = 'select * from categorias';
+        const [rows] = await db.execute(query);
+        db.release();
+        
+        return NextResponse.json({ results: rows });
+    } catch (error) {
+        return NextResponse.json({
+            error: error
+        }, { status: 500 });
+    }
+}
+
+a. Obtención de la Conexión a la Base de Datos
+
+const db = await pool.getConnection();
+
+- `pool.getConnection()`: Solicita una conexión al pool de conexiones de MySQL. Se usa `await` para esperar a que la conexión esté disponible. `db` es la conexión que se obtiene.
+
+b. Ejecución de la Consulta SQL
+
+const query = 'select * from categorias';
+const [rows] = await db.execute(query);
+
+- `query`: Define la consulta SQL que se ejecutará. En este caso, se seleccionan todas las filas de la tabla `categorias`.
+- `db.execute(query)`: Ejecuta la consulta SQL. `execute` es un método que devuelve una promesa. `rows` contiene los resultados de la consulta.
+
+c. Liberación de la Conexión
+
+db.release();
+
+- `db.release()`: Libera la conexión de vuelta al pool para que pueda ser reutilizada por otras solicitudes.
+
+d. Respuesta Exitosa
+
+return NextResponse.json({ results: rows });
+
+- `NextResponse.json({ results: rows })`: Crea una respuesta HTTP con formato JSON. El objeto JSON incluye una propiedad `results` que contiene los datos obtenidos de la consulta.
+
+e. Manejo de Errores
+
+catch (error) {
+    return NextResponse.json({
+        error: error
+    }, { status: 500 });
+}
+
+- `catch (error)`: Captura cualquier error que ocurra en el bloque `try`.
+- `NextResponse.json({ error: error }, { status: 500 })`: Crea una respuesta JSON que incluye el error y establece el código de estado HTTP a 500, indicando que ha ocurrido un error en el servidor.
+
+Resumen
+
+1. Conexión a la Base de Datos: Obtiene una conexión del pool de conexiones MySQL.
+2. Ejecución de la Consulta: Ejecuta una consulta SQL para seleccionar todos los registros de la tabla `categorias`.
+3. Liberación de la Conexión: Libera la conexión de vuelta al pool.
+4. Respuesta Exitosa: Si la consulta es exitosa, devuelve los datos en formato JSON.
+5. Manejo de Errores: Si ocurre un error, devuelve un mensaje de error en formato JSON con un código de estado HTTP 500.

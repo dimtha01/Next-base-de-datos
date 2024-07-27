@@ -1,95 +1,86 @@
-import Image from "next/image";
-import styles from "./page.module.css";
 
-export default function Home() {
+
+const page = () => {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <>
+      <h1>API NEXT MYSQL</h1>
+      <h3>Usuarios</h3>
+        <code>
+           <a href="http://localhost:3000/api/usuarios">GET  http://localhost:3000/api/usuarios</a>
+           <br/>
+           GET  http://localhost:3000/api/usuarios/1
+        </code>
+        <hr/>
+        <h3>Categorias</h3>
+        <code>
+           GET  http://localhost:3000/api/categorias
+           <br/>
+           GET  http://localhost:3000/api/categorias/1
+        </code>
+        <hr/>
+        <h3>Productos</h3>
+        <code>
+           GET  http://localhost:3000/api/productos
+           <br/>
+           GET  http://localhost:3000/api/productos/1
+           <br/>
+           GET  http://localhost:3000/api/productos/categorias/1
+           <br/>
+           GET  http://localhost:3000/api/productos/1
+           <br/>
+           GET  http://localhost:3000/api/productos/paginador?page=2&limit=20
+           <br/>
+           GET  http://localhost:3000/api/productos/buscar?q=w
+           <br/>  <br/>
+           Agrega un nuevo producto<br/>
+           POST http://localhost:3000/api/productos
+           <br/>
+           Request Body (ejemplo)
+          <code>
+      <pre>
+{`{
+"idestatus": 1,
+"idcategoria": 2,
+"title": "Awesome New Product",
+"price": 19.99,
+"stock": 100,
+"brand": "Brand Name",
+"thumbnail": "https://example.com/product_thumbnail.jpg"
+}`}
+      </pre>
+      </code>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      <br/>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+      Actualiza un producto<br/>
+      PATCH http://localhost:3000/api/productos/1
+      <br/>
+      <pre>
+{`{
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+  "idestatus": 1,
+  "idcategoria": 1,
+  "title": "Essence Mascara Lash Princess",
+  "price": 15,
+  "stock": 35,
+  "brand": "Essence",
+  "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+}`}
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+      </pre>
+
+      Eliminar un producto<br/>
+      http://localhost:3000/api/productos/201
+
+
+
+
+        </code>
+
+        
+    </>
+  )
 }
+
+export default page
